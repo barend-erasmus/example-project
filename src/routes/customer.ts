@@ -8,6 +8,7 @@ import { CustomerMapper } from '../mappers/customer';
 import { Customer } from '../models/customer';
 import { CustomerRepository } from '../repositories/customer';
 import { CustomerService } from '../services/customer';
+import { config } from '../config';
 
 export class CustomerRoute {
 
@@ -61,7 +62,7 @@ export class CustomerRoute {
             return CustomerRoute.customerService;
         }
 
-        const customerRepository: ICustomerRepository = new CustomerRepository(new SearchQueryBuilder(), 'mongodb://localhost:27017/example-project');
+        const customerRepository: ICustomerRepository = new CustomerRepository(new SearchQueryBuilder(), config.database.mongo.uri);
 
         CustomerRoute.customerService = new CustomerService(customerRepository);
 

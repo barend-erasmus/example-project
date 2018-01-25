@@ -38,7 +38,7 @@ export class CustomerRepository extends BaseRepository implements ICustomerRepos
 
         const result = await newCustomer.save();
 
-        customer.id = result._id.toString();
+        customer.setId(result._id.toString());
 
         return customer;
     }

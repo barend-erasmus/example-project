@@ -4,11 +4,14 @@ import { Customer } from '../models/customer';
 import { Query } from '../models/query';
 
 export class CustomerService implements ICustomerService {
-    constructor(private customerRepository: ICustomerRepository) {
+    constructor(
+        private customerRepository: ICustomerRepository,
+    ) {
 
     }
 
     public async create(customer: Customer): Promise<Customer> {
+
         if (!customer.valid()) {
             throw new Error('Invalid Customer');
         }
@@ -32,6 +35,7 @@ export class CustomerService implements ICustomerService {
     }
 
     public async search(query: Query): Promise<Customer[]> {
+
         if (!query) {
             throw new Error('Invalid Query');
         }

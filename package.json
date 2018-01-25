@@ -7,18 +7,10 @@
     "coverage": "tsc & istanbul cover node_modules/mocha/bin/_mocha --root ./src ./src/**/*.test.js",
     "lint": "tslint ./src/**/*.ts --exclude ./src/**/*.d.ts",
     "start": "tsc & node ./src/app.js",
-    "test": "tsc & mocha --timeout 5000 ./src/**/*.test.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/barend-erasmus/example-project.git"
+    "test": "tsc & mocha ./src/**/*.test.js"
   },
   "author": "Barend Erasmus",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/barend-erasmus/example-project/issues"
-  },
-  "homepage": "https://github.com/barend-erasmus/example-project#readme",
   "devDependencies": {
     "@types/chai": "^4.1.2",
     "@types/express": "^4.11.0",

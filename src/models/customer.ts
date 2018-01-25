@@ -13,6 +13,12 @@ export class Customer implements IEntity {
 
     }
 
+    public setId(id: string): Customer {
+        this.id = id;
+
+        return this;
+    }
+
     public valid(): boolean {
         if (this.contactInformationValid() && this.identificationNumberValid() && this.lastNameValid()) {
             return true;
