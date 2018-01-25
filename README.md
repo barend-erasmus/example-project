@@ -4,6 +4,7 @@
 
 ### Running the application
 
+* Enter `npm install` into terminal and press enter.
 * Make sure `typescript` is globally installed on your machine.
 * Make sure you have a valid connection string to a MongoDB instance in the `config.ts` file.
 * Enter `npm start` into terminal and press enter.
@@ -11,12 +12,14 @@
 
 ### Running the unit tests
 
+* Enter `npm install` into terminal and press enter.
 * Make sure `typescript` is globally installed on your machine.
 * Make sure `mocha` is globally installed on your machine.
 * Enter `npm test` into terminal and press enter.
 
 ### Running the code coverage
 
+* Enter `npm install` into terminal and press enter.
 * Make sure `typescript` is globally installed on your machine.
 * Make sure `istanbul` is globally installed on your machine.
 * Enter `npm run coverage` into terminal and press enter.
