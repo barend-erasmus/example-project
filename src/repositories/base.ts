@@ -2,7 +2,7 @@ import * as mongoose from 'mongoose';
 
 export class BaseRepository {
 
-    protected models: { CustomerModel: any };
+    protected models: { Customer: any };
 
     constructor(private uri: string) {
         mongoose.connect(this.uri);
@@ -33,7 +33,7 @@ export class BaseRepository {
         const CustomerModel = mongoose.model('Customer', Customer);
 
         this.models = {
-            CustomerModel,
+            Customer: CustomerModel,
         };
     }
 }

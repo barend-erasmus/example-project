@@ -8,6 +8,7 @@ import { Query } from '../models/query';
 import { BaseRepository } from './base';
 
 export class CustomerRepository extends BaseRepository implements ICustomerRepository {
+
     constructor(
         private searchQueryBuilder: IQueryBuilder,
         uri: string,
@@ -17,7 +18,7 @@ export class CustomerRepository extends BaseRepository implements ICustomerRepos
 
     public async create(customer: Customer): Promise<Customer> {
 
-        const newCustomer = new this.models.CustomerModel({
+        const newCustomer = new this.models.Customer({
             _id: new mongodb.ObjectID(),
             contactInformation: {
                 address: {
@@ -43,7 +44,7 @@ export class CustomerRepository extends BaseRepository implements ICustomerRepos
     }
 
     public async find(id: string): Promise<Customer> {
-        const result: any = await this.models.CustomerModel.findOne({
+        const result: any = await this.models.Customer.findOne({
             _id: id,
         });
 
@@ -55,7 +56,7 @@ export class CustomerRepository extends BaseRepository implements ICustomerRepos
     }
 
     public async search(query: Query): Promise<Customer[]> {
-        const result: any[] = await this.models.CustomerModel.find(this.searchQueryBuilder.build(query));
+        const result: any[] = await this.models.Customer.find(this.searchQueryBuilder.build(query));
 
         return result.map((item) => this.dtoToCustomer(item));
     }

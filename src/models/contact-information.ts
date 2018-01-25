@@ -9,18 +9,6 @@ export class ContactInformation {
 
     }
 
-    public addressValid(): boolean {
-        return this.address ? this.address.valid() : false;
-    }
-
-    public emailAddressValid(): boolean {
-        return this.emailAddress ? true : false;
-    }
-
-    public phoneNumberValid(): boolean {
-        return this.phoneNumber ? true : false;
-    }
-
     public valid(): boolean {
         if (this.addressValid() && this.emailAddressValid() && this.phoneNumberValid()) {
             return true;
@@ -28,4 +16,17 @@ export class ContactInformation {
 
         return false;
     }
+
+    private addressValid(): boolean {
+        return this.address ? this.address.valid() : false;
+    }
+
+    private emailAddressValid(): boolean {
+        return this.emailAddress ? true : false;
+    }
+
+    private phoneNumberValid(): boolean {
+        return this.phoneNumber ? true : false;
+    }
+
 }

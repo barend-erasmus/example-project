@@ -21,9 +21,7 @@ export class CustomerRoute {
             res.json(result);
 
         } catch (err) {
-            res.status(400).json({
-                message: err.message,
-            });
+            CustomerRoute.sendErrorResponse(err, res);
         }
     }
 
@@ -40,9 +38,7 @@ export class CustomerRoute {
             res.json(result);
 
         } catch (err) {
-            res.status(400).json({
-                message: err.message,
-            });
+            CustomerRoute.sendErrorResponse(err, res);
         }
     }
 
@@ -55,9 +51,7 @@ export class CustomerRoute {
             res.json(result);
 
         } catch (err) {
-            res.status(400).json({
-                message: err.message,
-            });
+            CustomerRoute.sendErrorResponse(err, res);
         }
     }
 
@@ -72,5 +66,11 @@ export class CustomerRoute {
         CustomerRoute.customerService = new CustomerService(customerRepository);
 
         return CustomerRoute.customerService;
+    }
+
+    private static sendErrorResponse(err: Error, res: express.Response): void {
+        res.status(400).json({
+            message: err.message,
+        });
     }
 }

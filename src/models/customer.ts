@@ -13,27 +13,27 @@ export class Customer implements IEntity {
 
     }
 
-    public contactInformationValid(): boolean {
-        return this.contactInformation ? this.contactInformation.valid() : false;
-    }
-
-    public firstNameValid(): boolean {
-        return this.firstName ? true : false;
-    }
-
-    public identificationNumberValid(): boolean {
-        return this.identificationNumber ? true : false;
-    }
-
-    public lastNameValid(): boolean {
-        return this.lastName ? true : false;
-    }
-
     public valid(): boolean {
         if (this.contactInformationValid() && this.identificationNumberValid() && this.lastNameValid()) {
             return true;
         }
 
         return false;
+    }
+
+    private contactInformationValid(): boolean {
+        return this.contactInformation ? this.contactInformation.valid() : false;
+    }
+
+    private firstNameValid(): boolean {
+        return this.firstName ? true : false;
+    }
+
+    private identificationNumberValid(): boolean {
+        return this.identificationNumber ? true : false;
+    }
+
+    private lastNameValid(): boolean {
+        return this.lastName ? true : false;
     }
 }

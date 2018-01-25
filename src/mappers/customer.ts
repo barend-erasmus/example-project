@@ -29,16 +29,16 @@ export class CustomerMapper {
 
         contactInformation = this.mapObject<ContactInformation>(obj, contactInformation);
 
-        if (!obj.address) {
-            return contactInformation;
-        }
-
         contactInformation.address = this.mapContactInformationAddress(obj.address);
 
         return contactInformation;
     }
 
     private mapObject<T>(obj: any, instance: T): T {
+
+        if (!obj) {
+            return null;
+        }
 
         for (const key of Object.keys(instance)) {
             instance[key] = obj[key];
