@@ -9,6 +9,7 @@ import { CustomerMapper } from '../mappers/customer';
 import { Customer } from '../models/customer';
 import { CustomerRepository } from '../repositories/customer';
 import { CustomerService } from '../services/customer';
+import { container } from '../ioc';
 
 export class CustomerRoute {
 
@@ -17,7 +18,9 @@ export class CustomerRoute {
     public static async get(req: express.Request, res: express.Response) {
         try {
 
-            const result: Customer = await CustomerRoute.getCustomerService().find(req.query.id);
+            const customerService: CustomerService = container.get<CustomerService>("CustomerService");
+            
+            const result: Customer = await customerService.find(req.query.id);
 
             res.json(result);
 
@@ -34,7 +37,9 @@ export class CustomerRoute {
 
             const customer: Customer = customerMapper.map(req.body);
 
-            const result: Customer = await CustomerRoute.getCustomerService().create(customer);
+            const customerService: CustomerService = container.get<CustomerService>("CustomerService");
+
+            const result: Customer = await customerService.create(customer);
 
             res.json(result);
 
@@ -47,26 +52,15 @@ export class CustomerRoute {
         try {
             const query = req.query;
 
-            const result: Customer[] = await CustomerRoute.getCustomerService().search(query);
+            const customerService: CustomerService = container.get<CustomerService>("CustomerService");
+
+            const result: Customer[] = await customerService.search(query);
 
             res.json(result);
 
         } catch (err) {
             CustomerRoute.sendErrorResponse(err, res);
         }
-    }
-
-    private static getCustomerService(): ICustomerService {
-
-        if (CustomerRoute.customerService) {
-            return CustomerRoute.customerService;
-        }
-
-        const customerRepository: ICustomerRepository = new CustomerRepository(new SearchQueryBuilder(), config.database.mongo.uri);
-
-        CustomerRoute.customerService = new CustomerService(customerRepository);
-
-        return CustomerRoute.customerService;
     }
 
     private static sendErrorResponse(err: Error, res: express.Response): void {
