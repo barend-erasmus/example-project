@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "coverage": "tsc & istanbul cover node_modules/mocha/bin/_mocha --root ./src ./src/**/*.test.js",
+    "coverage": "tsc & istanbul cover node_modules/mocha/bin/_mocha --root ./dist ./dist/**/*.test.js",
     "lint": "tslint ./src/**/*.ts --exclude ./src/**/*.d.ts",
-    "start": "tsc & node ./src/app.js",
-    "test": "tsc & mocha ./src/**/*.test.js"
+    "start": "tsc & node ./dist/app.js",
+    "test": "tsc & mocha ./dist/**/*.test.js"
   },
   "author": "Barend Erasmus",
   "license": "MIT",
@@ -25,8 +25,10 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
+    "inversify": "^4.10.0",
     "mongodb": "^3.0.1",
     "mongoose": "^5.0.1",
+    "reflect-metadata": "^0.1.12",
     "swagger-ui-express": "^2.0.14",
     "yargs": "^11.0.0"
   }
