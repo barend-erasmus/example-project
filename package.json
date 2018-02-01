@@ -6,7 +6,7 @@
   "scripts": {
     "coverage": "tsc & istanbul cover node_modules/mocha/bin/_mocha --root ./dist ./dist/**/*.test.js",
     "lint": "tslint ./src/**/*.ts --exclude ./src/**/*.d.ts",
-    "start": "tsc & node ./dist/app.js",
+    "start": "tsc & nodemon ./dist/app.js",
     "test": "tsc & mocha ./dist/**/*.test.js"
   },
   "author": "Barend Erasmus",
