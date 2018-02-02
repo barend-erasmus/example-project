@@ -1,6 +1,6 @@
 import * as fs from 'fs';
-import * as Sequelize from 'sequelize';
 import * as path from 'path';
+import * as Sequelize from 'sequelize';
 
 export class BaseRepository {
 
@@ -69,7 +69,7 @@ export class BaseRepository {
         ContactInformation.hasOne(Address, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
         Address.belongsTo(ContactInformation, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
 
-        this.models = {
+        BaseRepository.models = {
             Address,
             ContactInformation,
             Customer,

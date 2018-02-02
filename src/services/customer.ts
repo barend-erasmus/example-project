@@ -1,15 +1,15 @@
+import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
-import { injectable, inject } from 'inversify';
+import { ExampleProjectError } from '../errors/example-project-error';
 import { ICustomerRepository } from '../interfaces/customer-repository';
 import { ICustomerService } from '../interfaces/customer-service';
 import { Customer } from '../models/customer';
 import { Query } from '../models/query';
-import { ExampleProjectError } from '../errors/example-project-error';
 
 @injectable()
 export class CustomerService implements ICustomerService {
     constructor(
-        @inject("ICustomerRepository")
+        @inject('ICustomerRepository')
         private customerRepository: ICustomerRepository,
     ) {
 

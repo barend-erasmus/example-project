@@ -1,5 +1,5 @@
+import { inject, injectable, unmanaged } from 'inversify';
 import 'reflect-metadata';
-import { injectable, inject, unmanaged } from 'inversify';
 import { IQueryBuilder } from '../interfaces/query-builder';
 import { Query } from '../models/query';
 

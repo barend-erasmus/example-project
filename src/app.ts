@@ -4,8 +4,8 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as swagger from 'swagger-ui-express';
 import * as yargs from 'yargs';
-import { CustomerRoute } from './routes/customer';
 import { AuthenticationMiddleware } from './middleware/authentication';
+import { CustomerRoute } from './routes/customer';
 
 const argv = yargs.argv;
 const app = express();

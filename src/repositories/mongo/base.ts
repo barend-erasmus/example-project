@@ -2,18 +2,19 @@ import * as mongoose from 'mongoose';
 
 export class BaseRepository {
 
-    protected models: { Customer: any };
+    protected static models: { Customer: any };
 
     constructor(private uri: string) {
         mongoose.connect(this.uri);
 
-        this.configureModels();
+        if (!BaseRepository.models) {
+            this.configureModels();
+        }
 
     }
 
     private configureModels(): void {
         const Customer: any = new mongoose.Schema({
-            id: String,
             contactInformation: {
                 address: {
                     city: String,
@@ -32,7 +33,7 @@ export class BaseRepository {
 
         const CustomerModel = mongoose.model('Customer', Customer);
 
-        this.models = {
+        BaseRepository.models = {
             Customer: CustomerModel,
         };
     }

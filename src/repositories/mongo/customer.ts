@@ -1,13 +1,13 @@
-import 'reflect-metadata';
-import { injectable, inject, unmanaged } from 'inversify';
+import { inject, injectable, unmanaged } from 'inversify';
 import * as mongodb from 'mongodb';
-import { BaseRepository } from './base';
+import 'reflect-metadata';
 import { ICustomerRepository } from '../../interfaces/customer-repository';
 import { IQueryBuilder } from '../../interfaces/query-builder';
-import { Customer } from '../../models/customer';
-import { ContactInformation } from '../../models/contact-information';
 import { Address } from '../../models/address';
+import { ContactInformation } from '../../models/contact-information';
+import { Customer } from '../../models/customer';
 import { Query } from '../../models/query';
+import { BaseRepository } from './base';
 
 @injectable()
 export class MongoCustomerRepository extends BaseRepository implements ICustomerRepository {
@@ -22,7 +22,7 @@ export class MongoCustomerRepository extends BaseRepository implements ICustomer
 
     public async create(customer: Customer): Promise<Customer> {
 
-        const newCustomer = new this.models.Customer({
+        const newCustomer = new BaseRepository.models.Customer({
             _id: new mongodb.ObjectID(),
             contactInformation: {
                 address: {
@@ -48,7 +48,7 @@ export class MongoCustomerRepository extends BaseRepository implements ICustomer
     }
 
     public async find(id: string): Promise<Customer> {
-        const result: any = await this.models.Customer.findOne({
+        const result: any = await BaseRepository.models.Customer.findOne({
             _id: id,
         });
 
@@ -60,7 +60,7 @@ export class MongoCustomerRepository extends BaseRepository implements ICustomer
     }
 
     public async search(query: Query): Promise<Customer[]> {
-        const result: any[] = await this.models.Customer.find(this.searchQueryBuilder.build(query));
+        const result: any[] = await BaseRepository.models.Customer.find(this.searchQueryBuilder.build(query));
 
         return result.map((item) => this.dtoToCustomer(item));
     }

@@ -1,8 +1,8 @@
+import { inject, injectable, unmanaged } from 'inversify';
 import 'reflect-metadata';
-import { injectable, inject, unmanaged } from 'inversify';
+import * as Sequelize from 'sequelize';
 import { IQueryBuilder } from '../interfaces/query-builder';
 import { Query } from '../models/query';
-import * as Sequelize from 'sequelize';
 import { BaseRepository } from '../repositories/sequelize/base';
 
 @injectable()
@@ -25,7 +25,7 @@ export class SQLSearchQueryBuilder implements IQueryBuilder {
                     where: {
 
                     },
-                }
+                },
             ],
             where: {
 

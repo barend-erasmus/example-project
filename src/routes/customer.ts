@@ -2,18 +2,18 @@ import * as express from 'express';
 import { request } from 'https';
 import { Query } from 'mongoose';
 import { config } from '../config';
+import { container } from '../ioc';
 import { CustomerMapper } from '../mappers/customer';
 import { Customer } from '../models/customer';
 import { CustomerService } from '../services/customer';
-import { container } from '../ioc';
 
 export class CustomerRoute {
 
     public static async get(req: express.Request, res: express.Response) {
         try {
 
-            const customerService: CustomerService = container.get<CustomerService>("CustomerService");
-            
+            const customerService: CustomerService = container.get<CustomerService>('CustomerService');
+
             const result: Customer = await customerService.find(req.query.id);
 
             res.json(result);
@@ -31,7 +31,7 @@ export class CustomerRoute {
 
             const customer: Customer = customerMapper.map(req.body);
 
-            const customerService: CustomerService = container.get<CustomerService>("CustomerService");
+            const customerService: CustomerService = container.get<CustomerService>('CustomerService');
 
             const result: Customer = await customerService.create(customer);
 
@@ -46,7 +46,7 @@ export class CustomerRoute {
         try {
             const query = req.query;
 
-            const customerService: CustomerService = container.get<CustomerService>("CustomerService");
+            const customerService: CustomerService = container.get<CustomerService>('CustomerService');
 
             const result: Customer[] = await customerService.search(query);
 
