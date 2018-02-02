@@ -1,15 +1,19 @@
+import 'reflect-metadata';
+import { injectable, inject, unmanaged } from 'inversify';
 import * as mongodb from 'mongodb';
-import { ICustomerRepository } from '../interfaces/customer-repository';
-import { IQueryBuilder } from '../interfaces/query-builder';
-import { Address } from '../models/address';
-import { ContactInformation } from '../models/contact-information';
-import { Customer } from '../models/customer';
-import { Query } from '../models/query';
 import { BaseRepository } from './base';
+import { ICustomerRepository } from '../../interfaces/customer-repository';
+import { IQueryBuilder } from '../../interfaces/query-builder';
+import { Customer } from '../../models/customer';
+import { ContactInformation } from '../../models/contact-information';
+import { Address } from '../../models/address';
+import { Query } from '../../models/query';
 
-export class CustomerRepository extends BaseRepository implements ICustomerRepository {
+@injectable()
+export class MongoCustomerRepository extends BaseRepository implements ICustomerRepository {
 
     constructor(
+        @unmanaged()
         private searchQueryBuilder: IQueryBuilder,
         uri: string,
     ) {

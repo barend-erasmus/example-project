@@ -1,7 +1,10 @@
+import 'reflect-metadata';
+import { injectable, inject, unmanaged } from 'inversify';
 import { IQueryBuilder } from '../interfaces/query-builder';
 import { Query } from '../models/query';
 
-export class SearchQueryBuilder implements IQueryBuilder {
+@injectable()
+export class MongoSearchQueryBuilder implements IQueryBuilder {
 
     public build(query: Query): any {
         let result: any = {};
@@ -82,7 +85,7 @@ export class SearchQueryBuilder implements IQueryBuilder {
             return result;
         }
 
-        result['contactInformation.pnoneNumber'] = phoneNumber;
+        result['contactInformation.phoneNumber'] = phoneNumber;
 
         return result;
     }

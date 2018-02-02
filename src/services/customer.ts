@@ -1,10 +1,15 @@
+import 'reflect-metadata';
+import { injectable, inject } from 'inversify';
 import { ICustomerRepository } from '../interfaces/customer-repository';
 import { ICustomerService } from '../interfaces/customer-service';
 import { Customer } from '../models/customer';
 import { Query } from '../models/query';
+import { ExampleProjectError } from '../errors/example-project-error';
 
+@injectable()
 export class CustomerService implements ICustomerService {
     constructor(
+        @inject("ICustomerRepository")
         private customerRepository: ICustomerRepository,
     ) {
 
@@ -12,34 +17,51 @@ export class CustomerService implements ICustomerService {
 
     public async create(customer: Customer): Promise<Customer> {
 
-        if (!customer.valid()) {
-            throw new Error('Invalid Customer');
-        }
+        this.throwIfCustomerInvalid(customer);
 
-        const existingCustomers: Customer[] = await this.customerRepository.search(new Query(null, null, null, customer.identificationNumber, null, null));
-
-        if (existingCustomers.length > 0) {
-            throw new Error('Existing Customer');
-        }
+        await this.throwIfCustomerExist(customer.identificationNumber);
 
         return this.customerRepository.create(customer);
     }
 
     public async find(id: string): Promise<Customer> {
 
-        if (!id) {
-            throw new Error('Invalid Customer Id');
-        }
+        this.throwIfCustomerIdInvalid(id);
 
         return this.customerRepository.find(id);
     }
 
     public async search(query: Query): Promise<Customer[]> {
 
-        if (!query) {
-            throw new Error('Invalid Query');
-        }
+        this.throwIfQueryNull(query);
 
         return this.customerRepository.search(query);
+    }
+
+    private async throwIfCustomerExist(identificationNumber: string): Promise<void> {
+        const existingCustomers: Customer[] = await this.customerRepository.search(new Query(null, null, null, identificationNumber, null, null));
+
+        if (existingCustomers.length > 0) {
+            throw new ExampleProjectError('existing_customer', `Customer already exist with identification number '${identificationNumber}'`);
+        }
+
+    }
+
+    private throwIfCustomerIdInvalid(id: string): void {
+        if (!id) {
+            throw new ExampleProjectError('invalid_customer_id', 'Invalid Customer Id');
+        }
+    }
+
+    private throwIfCustomerInvalid(customer: Customer): void {
+        if (!customer.valid()) {
+            throw new ExampleProjectError('invalid_customer', 'Invalid Customer');
+        }
+    }
+
+    private throwIfQueryNull(query: Query): void {
+        if (!query) {
+            throw new ExampleProjectError('invalid_query', 'Invalid Query');
+        }
     }
 }

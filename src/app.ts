@@ -5,6 +5,7 @@ import * as path from 'path';
 import * as swagger from 'swagger-ui-express';
 import * as yargs from 'yargs';
 import { CustomerRoute } from './routes/customer';
+import { AuthenticationMiddleware } from './middleware/authentication';
 
 const argv = yargs.argv;
 const app = express();
@@ -17,11 +18,11 @@ const swaggerDocument = fs.readFileSync(path.join(__dirname, '..', 'swagger.json
 app.use('/api/docs', swagger.serve, swagger.setup(JSON.parse(swaggerDocument), { explore: true }));
 
 app.route('/api/customer')
-    .get(CustomerRoute.get)
-    .post(CustomerRoute.post);
+    .get(AuthenticationMiddleware.shouldBeAuthenticated, CustomerRoute.get)
+    .post(AuthenticationMiddleware.shouldBeAuthenticated, CustomerRoute.post);
 
 app.route('/api/customer/search')
-    .get(CustomerRoute.search);
+    .get(AuthenticationMiddleware.shouldBeAuthenticated, CustomerRoute.search);
 
 app.listen(argv.port || 3000, () => {
     console.log(`listening on port ${argv.port || 3000}`);

@@ -1,19 +1,13 @@
 import * as express from 'express';
 import { request } from 'https';
 import { Query } from 'mongoose';
-import { SearchQueryBuilder } from '../builders/search-query-builder';
 import { config } from '../config';
-import { ICustomerRepository } from '../interfaces/customer-repository';
-import { ICustomerService } from '../interfaces/customer-service';
 import { CustomerMapper } from '../mappers/customer';
 import { Customer } from '../models/customer';
-import { CustomerRepository } from '../repositories/customer';
 import { CustomerService } from '../services/customer';
 import { container } from '../ioc';
 
 export class CustomerRoute {
-
-    private static customerService: ICustomerRepository;
 
     public static async get(req: express.Request, res: express.Response) {
         try {
@@ -64,8 +58,6 @@ export class CustomerRoute {
     }
 
     private static sendErrorResponse(err: Error, res: express.Response): void {
-        res.status(400).json({
-            message: err.message,
-        });
+        res.status(400).json(err);
     }
 }
