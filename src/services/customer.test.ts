@@ -34,7 +34,7 @@ describe('CustomerService', () => {
 
                 throw new Error('Expected Exception');
             } catch (err) {
-                expect(err.message).to.be.eq('Invalid Customer');
+                expect(err.code).to.be.eq('invalid_customer');
             }
         });
 
@@ -72,7 +72,7 @@ describe('CustomerService', () => {
 
                 throw new Error('Expected Exception');
             } catch (err) {
-                expect(err.message).to.be.eq('Invalid Customer');
+                expect(err.code).to.be.eq('invalid_customer');
                 expect(customerRepositoryCreateSpy.notCalled).to.be.true;
             }
         });
@@ -89,7 +89,7 @@ describe('CustomerService', () => {
 
                 throw new Error('Expected Exception');
             } catch (err) {
-                expect(err.message).to.be.eq('Existing Customer');
+                expect(err.code).to.be.eq('existing_customer');
             }
         });
 
@@ -107,7 +107,7 @@ describe('CustomerService', () => {
 
                 throw new Error('Expected Exception');
             } catch (err) {
-                expect(err.message).to.be.eq('Existing Customer');
+                expect(err.code).to.be.eq('existing_customer');
                 expect(customerRepositoryCreateSpy.notCalled).to.be.true;
             }
         });
@@ -136,7 +136,7 @@ describe('CustomerService', () => {
 
                 throw new Error('Expected Exception');
             } catch (err) {
-                expect(err.message).to.be.eq('Invalid Customer Id');
+                expect(err.code).to.be.eq('invalid_customer_id');
             }
         });
 
@@ -164,7 +164,7 @@ describe('CustomerService', () => {
 
                 throw new Error('Expected Exception');
             } catch (err) {
-                expect(err.message).to.be.eq('Invalid Customer Id');
+                expect(err.code).to.be.eq('invalid_customer_id');
                 expect(customerRepositoryFindSpy.notCalled).to.be.true;
             }
         });
@@ -193,7 +193,7 @@ describe('CustomerService', () => {
 
                 throw new Error('Expected Exception');
             } catch (err) {
-                expect(err.message).to.be.eq('Invalid Query');
+                expect(err.code).to.be.eq('invalid_query');
             }
         });
 
@@ -221,7 +221,7 @@ describe('CustomerService', () => {
 
                 throw new Error('Expected Exception');
             } catch (err) {
-                expect(err.message).to.be.eq('Invalid Query');
+                expect(err.code).to.be.eq('invalid_query');
                 expect(customerRepositorySearchSpy.notCalled).to.be.true;
             }
         });
