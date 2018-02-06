@@ -1,6 +1,4 @@
 import * as express from 'express';
-import { request } from 'https';
-import { Query } from 'mongoose';
 import { config } from '../config';
 import { container } from '../ioc';
 import { CustomerMapper } from '../mappers/customer';
