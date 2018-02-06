@@ -21,21 +21,27 @@ export class CustomerService implements ICustomerService {
 
         await this.throwIfCustomerExist(customer.identificationNumber);
 
-        return this.customerRepository.create(customer);
+        customer = await this.customerRepository.create(customer);
+
+        return customer;
     }
 
     public async find(id: string): Promise<Customer> {
 
         this.throwIfCustomerIdInvalid(id);
 
-        return this.customerRepository.find(id);
+        const customer: Customer = await this.customerRepository.find(id);
+
+        return customer;
     }
 
     public async search(query: Query): Promise<Customer[]> {
 
         this.throwIfQueryNull(query);
 
-        return this.customerRepository.search(query);
+        const customers: Customer[] = await this.customerRepository.search(query);
+
+        return customers;
     }
 
     private async throwIfCustomerExist(identificationNumber: string): Promise<void> {
