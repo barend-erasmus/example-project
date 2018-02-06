@@ -5,8 +5,10 @@ import * as path from 'path';
 import * as swagger from 'swagger-ui-express';
 import * as yargs from 'yargs';
 import { AuthenticationMiddleware } from './middleware/authentication';
-import { ErrorMiddleware } from './middleware/error';
 import { CustomerRoute } from './routes/customer';
+import * as winston from 'winston';
+
+winston.add(winston.transports.File, { filename: 'example-project.log' });
 
 const argv = yargs.argv;
 const app = express();
@@ -24,8 +26,6 @@ app.route('/api/customer')
 app.route('/api/customer/search')
     .get(AuthenticationMiddleware.shouldBeAuthenticated, CustomerRoute.search);
 
-app.use(ErrorMiddleware.handle);
-
-app.listen(argv.port || 3000, () => {
-    console.log(`listening on port ${argv.port || 3000}`);
+app.listen(argv.port || process.env.PORT || 3000, () => {
+    winston.info(`listening on port ${argv.port || process.env.PORT || 3000}`);
 });
