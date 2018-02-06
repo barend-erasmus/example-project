@@ -18,28 +18,4 @@ export class Customer implements IEntity {
 
         return this;
     }
-
-    public valid(): boolean {
-        if (this.contactInformationValid() && this.identificationNumberValid() && this.lastNameValid()) {
-            return true;
-        }
-
-        return false;
-    }
-
-    private contactInformationValid(): boolean {
-        return this.contactInformation ? this.contactInformation.valid() : false;
-    }
-
-    private firstNameValid(): boolean {
-        return this.firstName ? true : false;
-    }
-
-    private identificationNumberValid(): boolean {
-        return this.identificationNumber ? true : false;
-    }
-
-    private lastNameValid(): boolean {
-        return this.lastName ? true : false;
-    }
 }

@@ -1,9 +1,8 @@
 import * as express from 'express';
-import { request } from 'https';
-import { Query } from 'mongoose';
 import { config } from '../config';
 import { container } from '../ioc';
-import { CustomerMapper } from '../mappers/customer';
+import { Address } from '../models/address';
+import { ContactInformation } from '../models/contact-information';
 import { Customer } from '../models/customer';
 import { CustomerService } from '../services/customer';
 
@@ -14,7 +13,7 @@ export class CustomerRoute {
 
             const customerService: CustomerService = container.get<CustomerService>('CustomerService');
 
-            const result: Customer = await customerService.find(req.query.id);
+            const result: Customer = await customerService.find(req.query.identificationNumber);
 
             res.json(result);
 
@@ -27,28 +26,25 @@ export class CustomerRoute {
         try {
             const body = req.body;
 
-            const customerMapper: CustomerMapper = new CustomerMapper();
-
-            const customer: Customer = customerMapper.map(req.body);
-
             const customerService: CustomerService = container.get<CustomerService>('CustomerService');
 
-            const result: Customer = await customerService.create(customer);
-
-            res.json(result);
-
-        } catch (err) {
-            CustomerRoute.sendErrorResponse(err, res);
-        }
-    }
-
-    public static async search(req: express.Request, res: express.Response) {
-        try {
-            const query = req.query;
-
-            const customerService: CustomerService = container.get<CustomerService>('CustomerService');
-
-            const result: Customer[] = await customerService.search(query);
+            const result: Customer = await customerService.create(new Customer(
+                body.id,
+                new ContactInformation(
+                    new Address(
+                        body.contactInformation.address.city,
+                        body.contactInformation.address.country,
+                        body.contactInformation.address.line1,
+                        body.contactInformation.address.line2,
+                        body.contactInformation.address.postalCode,
+                    ),
+                    body.contactInformation.emailAddress,
+                    body.contactInformation.phoneNumber,
+                ),
+                body.firstName,
+                body.identificationNumber,
+                body.lastName,
+            ));
 
             res.json(result);
 

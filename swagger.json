@@ -57,8 +57,8 @@
         "parameters": [
           {
             "in": "query",
-            "name": "id",
-            "description": "Customer Id",
+            "name": "identificationNumber",
+            "description": "Customer Identification Number",
             "required": true,
             "type": "string"
           }
@@ -71,75 +71,7 @@
             }
           },
           "400": {
-            "description": "Invalid Customer Id"
-          }
-        }
-      }
-    },
-    "/customer/search": {
-      "get": {
-        "summary": "Search customers",
-        "description": "",
-        "operationId": "searchCustomers",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "query",
-            "name": "city",
-            "description": "City",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "in": "query",
-            "name": "emailAddress",
-            "description": "Email Address",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "in": "query",
-            "name": "firstName",
-            "description": "First Name",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "in": "query",
-            "name": "identificationNumber",
-            "description": "Identification Number",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "in": "query",
-            "name": "lastName",
-            "description": "Last Name",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "in": "query",
-            "name": "phoneNumber",
-            "description": "Phone Number",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Customers",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Customer"
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid Customer Id"
+            "description": "Invalid Customer Identification Number"
           }
         }
       }

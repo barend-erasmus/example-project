@@ -2,19 +2,15 @@ import { inject, injectable, unmanaged } from 'inversify';
 import * as mongodb from 'mongodb';
 import 'reflect-metadata';
 import { ICustomerRepository } from '../../interfaces/customer-repository';
-import { IQueryBuilder } from '../../interfaces/query-builder';
 import { Address } from '../../models/address';
 import { ContactInformation } from '../../models/contact-information';
 import { Customer } from '../../models/customer';
-import { Query } from '../../models/query';
 import { BaseRepository } from './base';
 
 @injectable()
 export class MongoCustomerRepository extends BaseRepository implements ICustomerRepository {
 
     constructor(
-        @unmanaged()
-        private searchQueryBuilder: IQueryBuilder,
         uri: string,
     ) {
         super(uri);
@@ -47,9 +43,9 @@ export class MongoCustomerRepository extends BaseRepository implements ICustomer
         return customer;
     }
 
-    public async find(id: string): Promise<Customer> {
+    public async find(identificationNumber: string): Promise<Customer> {
         const result: any = await BaseRepository.models.Customer.findOne({
-            _id: id,
+            identificationNumber,
         });
 
         if (!result) {
@@ -57,12 +53,6 @@ export class MongoCustomerRepository extends BaseRepository implements ICustomer
         }
 
         return this.dtoToCustomer(result);
-    }
-
-    public async search(query: Query): Promise<Customer[]> {
-        const result: any[] = await BaseRepository.models.Customer.find(this.searchQueryBuilder.build(query));
-
-        return result.map((item) => this.dtoToCustomer(item));
     }
 
     private dtoToCustomer(dto: any): Customer {
