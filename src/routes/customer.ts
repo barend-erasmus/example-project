@@ -4,14 +4,14 @@ import { container } from '../ioc';
 import { Address } from '../models/address';
 import { ContactInformation } from '../models/contact-information';
 import { Customer } from '../models/customer';
-import { CustomerService } from '../services/customer';
+import { ICustomerService } from '../interfaces/customer-service';
 
 export class CustomerRoute {
 
     public static async get(req: express.Request, res: express.Response) {
         try {
 
-            const customerService: CustomerService = container.get<CustomerService>('CustomerService');
+            const customerService: ICustomerService = container.get<ICustomerService>('ICustomerService');
 
             const result: Customer = await customerService.find(req.query.identificationNumber);
 
@@ -26,7 +26,7 @@ export class CustomerRoute {
         try {
             const body = req.body;
 
-            const customerService: CustomerService = container.get<CustomerService>('CustomerService');
+            const customerService: ICustomerService = container.get<ICustomerService>('ICustomerService');
 
             const result: Customer = await customerService.create(new Customer(
                 body.id,
