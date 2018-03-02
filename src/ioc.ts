@@ -4,6 +4,7 @@ import { MongoSearchQueryBuilder } from './builders/mongo-search-query-builder';
 import { SQLSearchQueryBuilder } from './builders/sql-search-query-builder';
 import { config } from './config';
 import { ICustomerRepository } from './interfaces/customer-repository';
+import { ICustomerService } from './interfaces/customer-service';
 import { IQueryBuilder } from './interfaces/query-builder';
 import { MongoCustomerRepository } from './repositories/mongo/customer';
 import { BaseRepository } from './repositories/sequelize/base';
@@ -32,7 +33,7 @@ container.bind<ICustomerRepository>('ICustomerRepository').toDynamicValue((conte
 //     return new SQLCustomerRepository(searchQueryBuilder);
 // });
 
-container.bind<CustomerService>('CustomerService').to(CustomerService);
+container.bind<ICustomerService>('ICustomerService').to(CustomerService);
 
 export {
     container,

@@ -1,4 +1,5 @@
 export class Query {
+
     constructor(
         public city: string,
         public emailAddress: string,

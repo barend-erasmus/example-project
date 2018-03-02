@@ -16,7 +16,6 @@ export class CustomerService implements ICustomerService {
     }
 
     public async create(customer: Customer): Promise<Customer> {
-
         this.throwIfCustomerInvalid(customer);
 
         await this.throwIfCustomerExist(customer.identificationNumber);
@@ -27,7 +26,6 @@ export class CustomerService implements ICustomerService {
     }
 
     public async find(id: string): Promise<Customer> {
-
         this.throwIfCustomerIdInvalid(id);
 
         const customer: Customer = await this.customerRepository.find(id);
@@ -36,7 +34,6 @@ export class CustomerService implements ICustomerService {
     }
 
     public async search(query: Query): Promise<Customer[]> {
-
         this.throwIfQueryNull(query);
 
         const customers: Customer[] = await this.customerRepository.search(query);

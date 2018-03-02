@@ -21,7 +21,6 @@ export class MongoCustomerRepository extends BaseRepository implements ICustomer
     }
 
     public async create(customer: Customer): Promise<Customer> {
-
         const newCustomer = new BaseRepository.models.Customer({
             _id: new mongodb.ObjectID(),
             contactInformation: {

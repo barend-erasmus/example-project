@@ -3,10 +3,10 @@ import * as express from 'express';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as swagger from 'swagger-ui-express';
+import * as winston from 'winston';
 import * as yargs from 'yargs';
 import { AuthenticationMiddleware } from './middleware/authentication';
 import { CustomerRoute } from './routes/customer';
-import * as winston from 'winston';
 
 winston.add(winston.transports.File, { filename: 'example-project.log' });
 

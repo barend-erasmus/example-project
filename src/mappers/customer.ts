@@ -3,8 +3,8 @@ import { ContactInformation } from '../models/contact-information';
 import { Customer } from '../models/customer';
 
 export class CustomerMapper {
-    public map(obj: any): Customer {
 
+    public map(obj: any): Customer {
         const customer = this.mapObject(obj,  new Customer(null, null, null, null, null));
 
         customer.contactInformation = this.mapContactInformation(obj.contactInformation);
@@ -13,14 +13,12 @@ export class CustomerMapper {
     }
 
     private mapContactInformationAddress(obj: any): Address {
-
         const address: Address = new Address(null, null, null, null, null);
 
         return this.mapObject<Address>(obj, address);
     }
 
     private mapContactInformation(obj: any): ContactInformation {
-
         if (!obj) {
             return null;
         }
@@ -35,7 +33,6 @@ export class CustomerMapper {
     }
 
     private mapObject<T>(obj: any, instance: T): T {
-
         if (!obj) {
             return null;
         }

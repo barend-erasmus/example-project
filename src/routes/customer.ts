@@ -1,16 +1,15 @@
 import * as express from 'express';
 import { config } from '../config';
+import { ICustomerService } from '../interfaces/customer-service';
 import { container } from '../ioc';
 import { CustomerMapper } from '../mappers/customer';
 import { Customer } from '../models/customer';
-import { CustomerService } from '../services/customer';
 
 export class CustomerRoute {
 
     public static async get(req: express.Request, res: express.Response) {
         try {
-
-            const customerService: CustomerService = container.get<CustomerService>('CustomerService');
+            const customerService: ICustomerService = container.get<ICustomerService>('ICustomerService');
 
             const result: Customer = await customerService.find(req.query.id);
 
@@ -29,7 +28,7 @@ export class CustomerRoute {
 
             const customer: Customer = customerMapper.map(req.body);
 
-            const customerService: CustomerService = container.get<CustomerService>('CustomerService');
+            const customerService: ICustomerService = container.get<ICustomerService>('ICustomerService');
 
             const result: Customer = await customerService.create(customer);
 
@@ -44,7 +43,7 @@ export class CustomerRoute {
         try {
             const query = req.query;
 
-            const customerService: CustomerService = container.get<CustomerService>('CustomerService');
+            const customerService: ICustomerService = container.get<ICustomerService>('ICustomerService');
 
             const result: Customer[] = await customerService.search(query);
 

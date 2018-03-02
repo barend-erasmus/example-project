@@ -20,7 +20,6 @@ export class SQLCustomerRepository extends BaseRepository implements ICustomerRe
     }
 
     public async create(customer: Customer): Promise<Customer> {
-
         const result: any = await BaseRepository.models.Customer.create({
             contactInformation: {
                 address: {
