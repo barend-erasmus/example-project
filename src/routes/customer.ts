@@ -1,16 +1,15 @@
 import * as express from 'express';
 import { config } from '../config';
+import { ICustomerService } from '../interfaces/customer-service';
 import { container } from '../ioc';
 import { Address } from '../models/address';
 import { ContactInformation } from '../models/contact-information';
 import { Customer } from '../models/customer';
-import { ICustomerService } from '../interfaces/customer-service';
 
 export class CustomerRoute {
 
     public static async get(req: express.Request, res: express.Response) {
         try {
-
             const customerService: ICustomerService = container.get<ICustomerService>('ICustomerService');
 
             const result: Customer = await customerService.find(req.query.identificationNumber);

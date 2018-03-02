@@ -2,9 +2,9 @@ import { Container, interfaces } from 'inversify';
 import 'reflect-metadata';
 import { config } from './config';
 import { ICustomerRepository } from './interfaces/customer-repository';
+import { ICustomerService } from './interfaces/customer-service';
 import { MongoCustomerRepository } from './repositories/mongo/customer';
 import { CustomerService } from './services/customer';
-import { ICustomerService } from './interfaces/customer-service';
 
 const container: Container = new Container();
 
