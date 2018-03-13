@@ -4,6 +4,7 @@ import { ExampleProjectError } from '../errors/example-project-error';
 import { ICustomerRepository } from '../interfaces/customer-repository';
 import { ICustomerService } from '../interfaces/customer-service';
 import { Customer } from '../models/customer';
+import { OperationResult } from '../models/operation-result';
 import { Query } from '../models/query';
 
 @injectable()
@@ -15,56 +16,80 @@ export class CustomerService implements ICustomerService {
 
     }
 
-    public async create(customer: Customer): Promise<Customer> {
-        this.throwIfCustomerInvalid(customer);
+    public async create(customer: Customer): Promise<OperationResult<Customer>> {
+        const result: OperationResult<Customer> = OperationResult.create<Customer>(null);
 
-        await this.throwIfCustomerExist(customer.identificationNumber);
+        this.checkIfCustomerInvalid(customer, result);
+
+        await this.checkIfCustomerExist(customer.identificationNumber, result);
+
+        if (result.hasErrors()) {
+            return result;
+        }
 
         customer = await this.customerRepository.create(customer);
 
-        return customer;
+        result.setResult(customer);
+
+        return result;
     }
 
-    public async find(id: string): Promise<Customer> {
-        this.throwIfCustomerIdInvalid(id);
+    public async find(id: string): Promise<OperationResult<Customer>> {
+        const result: OperationResult<Customer> = OperationResult.create<Customer>(null);
+
+        this.checkIfCustomerIdInvalid(id, result);
+
+        if (result.hasErrors()) {
+            return result;
+        }
 
         const customer: Customer = await this.customerRepository.find(id);
 
-        return customer;
+        result.setResult(customer);
+
+        return result;
     }
 
-    public async search(query: Query): Promise<Customer[]> {
-        this.throwIfQueryNull(query);
+    public async search(query: Query): Promise<OperationResult<Customer[]>> {
+        const result: OperationResult<Customer[]> = OperationResult.create<Customer[]>(null);
+
+        this.checkIfQueryNull(query, result);
+
+        if (result.hasErrors()) {
+            return result;
+        }
 
         const customers: Customer[] = await this.customerRepository.search(query);
 
-        return customers;
+        result.setResult(customers);
+
+        return result;
     }
 
-    private async throwIfCustomerExist(identificationNumber: string): Promise<void> {
+    private async checkIfCustomerExist(identificationNumber: string, operationResult: OperationResult<Customer>): Promise<void> {
         const existingCustomers: Customer[] = await this.customerRepository.search(new Query(null, null, null, identificationNumber, null, null));
 
         if (existingCustomers.length > 0) {
-            throw new ExampleProjectError('existing_customer', `Customer already exist with identification number '${identificationNumber}'`);
+            operationResult.addMessage('existing_customer', null, `Customer already exist with identification number '${identificationNumber}'`);
         }
 
     }
 
-    private throwIfCustomerIdInvalid(id: string): void {
+    private checkIfCustomerIdInvalid(id: string, operationResult: OperationResult<Customer>): void {
         if (!id) {
-            throw new ExampleProjectError('invalid_customer_id', 'Invalid Customer Id');
+            operationResult.addMessage('invalid_customer_id', null, 'Invalid Customer Id');
         }
     }
 
-    private throwIfCustomerInvalid(customer: Customer): void {
+    private checkIfCustomerInvalid(customer: Customer, operationResult: OperationResult<Customer>): void {
         if (!customer.valid()) {
-            throw new ExampleProjectError('invalid_customer', 'Invalid Customer');
+            operationResult.addMessage('invalid_customer', null, 'Invalid Customer');
         }
     }
 
-    private throwIfQueryNull(query: Query): void {
+    private checkIfQueryNull(query: Query, operationResult: OperationResult<Customer[]>): void {
         if (!query) {
-            throw new ExampleProjectError('invalid_query', 'Invalid Query');
+            operationResult.addMessage('invalid_query', null, 'Invalid Query');
         }
     }
 }

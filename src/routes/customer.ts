@@ -4,19 +4,20 @@ import { ICustomerService } from '../interfaces/customer-service';
 import { container } from '../ioc';
 import { CustomerMapper } from '../mappers/customer';
 import { Customer } from '../models/customer';
+import { OperationResult } from '../models/operation-result';
+import { BaseRouter } from './base';
 
-export class CustomerRoute {
+export class CustomerRouter extends BaseRouter {
 
     public static async get(req: express.Request, res: express.Response) {
         try {
             const customerService: ICustomerService = container.get<ICustomerService>('ICustomerService');
 
-            const result: Customer = await customerService.find(req.query.id);
+            const result: OperationResult<Customer> = await customerService.find(req.query.id);
 
-            res.json(result);
-
+            CustomerRouter.sendOperationResult(res, result);
         } catch (err) {
-            CustomerRoute.sendErrorResponse(err, res);
+            CustomerRouter.sendErrorResponse(err, res);
         }
     }
 
@@ -30,12 +31,11 @@ export class CustomerRoute {
 
             const customerService: ICustomerService = container.get<ICustomerService>('ICustomerService');
 
-            const result: Customer = await customerService.create(customer);
+            const result: OperationResult<Customer> = await customerService.create(customer);
 
-            res.json(result);
-
+            CustomerRouter.sendOperationResult(res, result);
         } catch (err) {
-            CustomerRoute.sendErrorResponse(err, res);
+            CustomerRouter.sendErrorResponse(err, res);
         }
     }
 
@@ -45,16 +45,11 @@ export class CustomerRoute {
 
             const customerService: ICustomerService = container.get<ICustomerService>('ICustomerService');
 
-            const result: Customer[] = await customerService.search(query);
+            const result: OperationResult<Customer[]> = await customerService.search(query);
 
-            res.json(result);
-
+            CustomerRouter.sendOperationResult(res, result);
         } catch (err) {
-            CustomerRoute.sendErrorResponse(err, res);
+            CustomerRouter.sendErrorResponse(err, res);
         }
-    }
-
-    private static sendErrorResponse(err: Error, res: express.Response): void {
-        res.status(400).json(err);
     }
 }

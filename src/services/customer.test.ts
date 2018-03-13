@@ -3,6 +3,7 @@ import 'mocha';
 import * as sinon from 'sinon';
 import { ICustomerRepository } from '../interfaces/customer-repository';
 import { Customer } from '../models/customer';
+import { OperationResult } from '../models/operation-result';
 import { Query } from '../models/query';
 import { CustomerService } from './customer';
 
@@ -16,38 +17,27 @@ describe('CustomerService', () => {
 
         beforeEach(async () => {
             customerRepository = {
-                create: (customer: Customer) => Promise.resolve(null),
-                search: (query: Query) => Promise.resolve([]),
+                create: async (customer: Customer) => {
+                    return customer;
+                },
+                search: async (query: Query) => {
+                    return [];
+                },
             } as ICustomerRepository;
 
             customerService = new CustomerService(customerRepository);
         });
 
-        it('should throw exception given invalid customer', async () => {
-
+        it('should return with validation messages given invalid customer', async () => {
             const customer: Customer = new Customer(null, null, null, null, null);
             sinon.stub(customer, 'valid').returns(false);
 
-            try {
+            const result: OperationResult<Customer> = await customerService.create(customer);
 
-                await customerService.create(customer);
-
-                throw new Error('Expected Exception');
-            } catch (err) {
-                expect(err.code).to.be.eq('invalid_customer');
-            }
-        });
-
-        it('should not throw exception given valid customer', async () => {
-
-            const customer: Customer = new Customer(null, null, null, null, null);
-            sinon.stub(customer, 'valid').returns(true);
-
-            await customerService.create(customer);
+            expect(result.messages[0].message).to.be.eq('Invalid Customer');
         });
 
         it('should call create in repository given valid customer', async () => {
-
             const customer: Customer = new Customer(null, null, null, null, null);
             sinon.stub(customer, 'valid').returns(true);
 
@@ -56,60 +46,38 @@ describe('CustomerService', () => {
             await customerService.create(customer);
 
             expect(customerRepositoryCreateSpy.calledOnce).to.be.true;
-
         });
 
         it('should not call create in repository given invalid customer', async () => {
-
             const customer: Customer = new Customer(null, null, null, null, null);
             sinon.stub(customer, 'valid').returns(false);
 
             const customerRepositoryCreateSpy = sinon.stub(customerRepository, 'create').returns(null);
 
-            try {
-
-                await customerService.create(customer);
-
-                throw new Error('Expected Exception');
-            } catch (err) {
-                expect(err.code).to.be.eq('invalid_customer');
-                expect(customerRepositoryCreateSpy.notCalled).to.be.true;
-            }
+            await customerService.create(customer);
+            expect(customerRepositoryCreateSpy.notCalled).to.be.true;
         });
 
-        it('should throw exception given identification number already exists', async () => {
-
+        it('should return with validation messages given identification number already exists', async () => {
             const customer: Customer = new Customer(null, null, null, null, null);
             sinon.stub(customer, 'valid').returns(true);
             sinon.stub(customerRepository, 'search').returns([new Customer(null, null, null, null, null)]);
 
-            try {
+            const result: OperationResult<Customer> = await customerService.create(customer);
 
-                await customerService.create(customer);
-
-                throw new Error('Expected Exception');
-            } catch (err) {
-                expect(err.code).to.be.eq('existing_customer');
-            }
+            expect(result.messages[0].message).to.be.eq(`Customer already exist with identification number 'null'`);
         });
 
         it('should not call create in repository given identification number already exists', async () => {
-
             const customer: Customer = new Customer(null, null, null, null, null);
             sinon.stub(customer, 'valid').returns(true);
 
             sinon.stub(customerRepository, 'search').returns([new Customer(null, null, null, null, null)]);
             const customerRepositoryCreateSpy = sinon.stub(customerRepository, 'create').returns(null);
 
-            try {
+            await customerService.create(customer);
 
-                await customerService.create(customer);
-
-                throw new Error('Expected Exception');
-            } catch (err) {
-                expect(err.code).to.be.eq('existing_customer');
-                expect(customerRepositoryCreateSpy.notCalled).to.be.true;
-            }
+            expect(customerRepositoryCreateSpy.notCalled).to.be.true;
         });
 
     });
@@ -128,45 +96,26 @@ describe('CustomerService', () => {
             customerService = new CustomerService(customerRepository);
         });
 
-        it('should throw exception given null id', async () => {
+        it('should return with validation messages given null id', async () => {
+            const result: OperationResult<Customer> = await customerService.find(null);
 
-            try {
-
-                await customerService.find(null);
-
-                throw new Error('Expected Exception');
-            } catch (err) {
-                expect(err.code).to.be.eq('invalid_customer_id');
-            }
-        });
-
-        it('should not throw exception given valid customer id', async () => {
-            await customerService.find('1');
+            expect(result.messages[0].message).to.be.eq('Invalid Customer Id');
         });
 
         it('should call find in repository given valid customer id', async () => {
-
             const customerRepositoryFindSpy = sinon.stub(customerRepository, 'find').returns(null);
 
             await customerService.find('1');
 
             expect(customerRepositoryFindSpy.calledOnce).to.be.true;
-
         });
 
         it('should not call find in repository given invalid customer id', async () => {
-
             const customerRepositoryFindSpy = sinon.stub(customerRepository, 'find').returns(null);
 
-            try {
+            await customerService.find(null);
 
-                await customerService.find(null);
-
-                throw new Error('Expected Exception');
-            } catch (err) {
-                expect(err.code).to.be.eq('invalid_customer_id');
-                expect(customerRepositoryFindSpy.notCalled).to.be.true;
-            }
+            expect(customerRepositoryFindSpy.notCalled).to.be.true;
         });
 
     });
@@ -185,45 +134,26 @@ describe('CustomerService', () => {
             customerService = new CustomerService(customerRepository);
         });
 
-        it('should throw exception given null query', async () => {
+        it('should return with validation messages given null query', async () => {
+            const result: OperationResult<Customer[]> = await customerService.search(null);
 
-            try {
-
-                await customerService.search(null);
-
-                throw new Error('Expected Exception');
-            } catch (err) {
-                expect(err.code).to.be.eq('invalid_query');
-            }
-        });
-
-        it('should not throw exception given valid query', async () => {
-            await customerService.search(new Query(null, null, null, null, null, null));
+            expect(result.messages[0].message).to.be.eq('Invalid Query');
         });
 
         it('should call search in repository given valid query', async () => {
-
             const customerRepositorySearchSpy = sinon.stub(customerRepository, 'search').returns(null);
 
             await customerService.search(new Query(null, null, null, null, null, null));
 
             expect(customerRepositorySearchSpy.calledOnce).to.be.true;
-
         });
 
         it('should not call search in repository given invalid query', async () => {
-
             const customerRepositorySearchSpy = sinon.stub(customerRepository, 'search').returns(null);
 
-            try {
+            await customerService.search(null);
 
-                await customerService.search(null);
-
-                throw new Error('Expected Exception');
-            } catch (err) {
-                expect(err.code).to.be.eq('invalid_query');
-                expect(customerRepositorySearchSpy.notCalled).to.be.true;
-            }
+            expect(customerRepositorySearchSpy.notCalled).to.be.true;
         });
 
     });

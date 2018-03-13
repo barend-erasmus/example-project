@@ -6,7 +6,7 @@ import * as swagger from 'swagger-ui-express';
 import * as winston from 'winston';
 import * as yargs from 'yargs';
 import { AuthenticationMiddleware } from './middleware/authentication';
-import { CustomerRoute } from './routes/customer';
+import { CustomerRouter } from './routes/customer';
 
 winston.add(winston.transports.File, { filename: 'example-project.log' });
 
@@ -20,11 +20,11 @@ const swaggerDocument = fs.readFileSync(path.join(__dirname, '..', 'swagger.json
 app.use('/api/docs', swagger.serve, swagger.setup(JSON.parse(swaggerDocument), { explore: true }));
 
 app.route('/api/customer')
-    .get(AuthenticationMiddleware.shouldBeAuthenticated, CustomerRoute.get)
-    .post(AuthenticationMiddleware.shouldBeAuthenticated, CustomerRoute.post);
+    .get(AuthenticationMiddleware.shouldBeAuthenticated, CustomerRouter.get)
+    .post(AuthenticationMiddleware.shouldBeAuthenticated, CustomerRouter.post);
 
 app.route('/api/customer/search')
-    .get(AuthenticationMiddleware.shouldBeAuthenticated, CustomerRoute.search);
+    .get(AuthenticationMiddleware.shouldBeAuthenticated, CustomerRouter.search);
 
 app.listen(argv.port || process.env.PORT || 3000, () => {
     winston.info(`listening on port ${argv.port || process.env.PORT || 3000}`);
