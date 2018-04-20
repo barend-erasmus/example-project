@@ -6,7 +6,7 @@ export class ErrorMiddleware {
         ErrorMiddleware.sendErrorResponse(err, res);
     }
 
-    private static sendErrorResponse(err: Error, res: express.Response): void {
+    protected static sendErrorResponse(err: Error, res: express.Response): void {
         res.status(400).json(err);
     }
 }

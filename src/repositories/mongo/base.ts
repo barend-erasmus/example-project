@@ -4,7 +4,7 @@ export class BaseRepository {
 
     protected static models: { Customer: any };
 
-    constructor(private uri: string) {
+    constructor(protected uri: string) {
         mongoose.connect(this.uri);
 
         if (!BaseRepository.models) {
@@ -13,7 +13,7 @@ export class BaseRepository {
 
     }
 
-    private configureModels(): void {
+    protected configureModels(): void {
         const Customer: any = new mongoose.Schema({
             contactInformation: {
                 address: {
@@ -37,4 +37,5 @@ export class BaseRepository {
             Customer: CustomerModel,
         };
     }
+
 }

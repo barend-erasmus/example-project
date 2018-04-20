@@ -24,7 +24,7 @@ export class MongoSearchQueryBuilder implements IQueryBuilder {
         return result;
     }
 
-    private setCity(city: string, result: any): any {
+    protected setCity(city: string, result: any): any {
         if (!city) {
             return result;
         }
@@ -34,7 +34,7 @@ export class MongoSearchQueryBuilder implements IQueryBuilder {
         return result;
     }
 
-    private setEmailAddress(emailAddress: string, result: any): any {
+    protected setEmailAddress(emailAddress: string, result: any): any {
         if (!emailAddress) {
             return result;
         }
@@ -44,7 +44,7 @@ export class MongoSearchQueryBuilder implements IQueryBuilder {
         return result;
     }
 
-    private setFirstName(firstName: string, result: any): any {
+    protected setFirstName(firstName: string, result: any): any {
         if (!firstName) {
             return result;
         }
@@ -54,7 +54,7 @@ export class MongoSearchQueryBuilder implements IQueryBuilder {
         return result;
     }
 
-    private setIdentificationNumber(identificationNumber: string, result: any): any {
+    protected setIdentificationNumber(identificationNumber: string, result: any): any {
         if (!identificationNumber) {
             return result;
         }
@@ -64,7 +64,7 @@ export class MongoSearchQueryBuilder implements IQueryBuilder {
         return result;
     }
 
-    private setLastName(lastName: string, result: any): any {
+    protected setLastName(lastName: string, result: any): any {
         if (!lastName) {
             return result;
         }
@@ -74,7 +74,7 @@ export class MongoSearchQueryBuilder implements IQueryBuilder {
         return result;
     }
 
-    private setPhoneNumber(phoneNumber: string, result: any): any {
+    protected setPhoneNumber(phoneNumber: string, result: any): any {
         if (!phoneNumber) {
             return result;
         }
@@ -83,4 +83,5 @@ export class MongoSearchQueryBuilder implements IQueryBuilder {
 
         return result;
     }
+
 }

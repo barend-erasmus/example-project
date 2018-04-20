@@ -52,4 +52,5 @@ export class CustomerRouter extends BaseRouter {
             CustomerRouter.sendErrorResponse(err, res);
         }
     }
+
 }

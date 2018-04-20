@@ -1,0 +1,122 @@
+<div class="container">
+  <div class="jumbotron">
+    <h1 class="display-4">Welcome,</h1>
+    <p class="lead">Here are a few examples of ways you can use our API</p>
+    <p class="lead">
+      <a class="btn btn-primary btn-lg" href="https://github.com/barend-erasmus/example-project" role="button">Learn more</a>
+    </p>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Find existing customer</h5>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">#</span>
+            </div>
+            <input [(ngModel)]="findExistingCustomerIdentificationNumber" (keydown)="findExistingCustomerFound = null" type="text" class="form-control" placeholder="Identification Number"
+              aria-label="Identification Number" aria-describedby="basic-addon1">
+            <div class="input-group-append">
+              <button (click)="onClickFindExistingCustomer()" class="btn btn-outline-secondary" type="button">Search</button>
+            </div>
+          </div>
+          <div *ngIf="findExistingCustomerFound != null">
+            <label *ngIf="findExistingCustomerFound" class="text-success">Customer with identification number of '{{ findExistingCustomerIdentificationNumber }}' does exist.</label>
+            <label *ngIf="!findExistingCustomerFound" class="text-danger">Customer with identification number of '{{ findExistingCustomerIdentificationNumber }}' does not exist.</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Create new customer</h5>
+          <label>Personal Information</label>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="First Name" aria-label="First Name" aria-describedby="basic-addon1">
+              </div>
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Last Name" aria-label="Last Name" aria-describedby="basic-addon1">
+              </div>
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Identification Number" aria-label="Identification Number" aria-describedby="basic-addon1">
+              </div>
+            </div>
+          </div>
+          <label>Contact Information</label>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Email Address" aria-label="Email Address" aria-describedby="basic-addon1">
+              </div>
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Line 1" aria-label="Line 1" aria-describedby="basic-addon1">
+              </div>
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="City" aria-label="City" aria-describedby="basic-addon1">
+              </div>
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Postal Code" aria-label="Postal Code" aria-describedby="basic-addon1">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Phone Number" aria-label="Phone Number" aria-describedby="basic-addon1">
+              </div>
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Line 2" aria-label="Line 2" aria-describedby="basic-addon1">
+              </div>
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Country" aria-label="Country" aria-describedby="basic-addon1">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">List Customers</h5>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Identification Number</th>
+                <th scope="col">Phone Number</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>
+                  <input [(ngModel)]="searchIdentificationNumber" type="text" class="form-control" placeholder="Identification Number" aria-label="Identification Number"
+                  />
+                </td>
+                <td></td>
+                <td>
+                  <button (click)="onClickSearchListCustomers()" type="button" class="btn btn-primary">Search</button>
+                </td>
+              </tr>
+              <tr *ngFor="let customer of customers">
+                <td>{{ customer.firstName }}</td>
+                <td>{{ customer.lastName }}</td>
+                <td>{{ customer.identificationNumber }}</td>
+                <td>{{ customer.contactInformation.phoneNumber }}</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -27,19 +27,20 @@ export class Customer implements IEntity {
         return false;
     }
 
-    private contactInformationValid(): boolean {
+    protected contactInformationValid(): boolean {
         return this.contactInformation ? this.contactInformation.valid() : false;
     }
 
-    private firstNameValid(): boolean {
+    protected firstNameValid(): boolean {
         return this.firstName ? true : false;
     }
 
-    private identificationNumberValid(): boolean {
+    protected identificationNumberValid(): boolean {
         return this.identificationNumber ? true : false;
     }
 
-    private lastNameValid(): boolean {
+    protected lastNameValid(): boolean {
         return this.lastName ? true : false;
     }
+
 }

@@ -1,4 +1,5 @@
 import * as bodyParser from 'body-parser';
+import * as cors from 'cors';
 import * as express from 'express';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -14,6 +15,7 @@ const argv = yargs.argv;
 const app = express();
 
 app.use(bodyParser.json({}));
+app.use(cors());
 
 const swaggerDocument = fs.readFileSync(path.join(__dirname, '..', 'swagger.json'), 'utf8');
 

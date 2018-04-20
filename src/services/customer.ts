@@ -11,7 +11,7 @@ import { Query } from '../models/query';
 export class CustomerService implements ICustomerService {
     constructor(
         @inject('ICustomerRepository')
-        private customerRepository: ICustomerRepository,
+        protected customerRepository: ICustomerRepository,
     ) {
 
     }
@@ -66,7 +66,7 @@ export class CustomerService implements ICustomerService {
         return result;
     }
 
-    private async checkIfCustomerExist(identificationNumber: string, operationResult: OperationResult<Customer>): Promise<void> {
+    protected async checkIfCustomerExist(identificationNumber: string, operationResult: OperationResult<Customer>): Promise<void> {
         const existingCustomers: Customer[] = await this.customerRepository.search(new Query(null, null, null, identificationNumber, null, null));
 
         if (existingCustomers.length > 0) {
@@ -75,21 +75,22 @@ export class CustomerService implements ICustomerService {
 
     }
 
-    private checkIfCustomerIdInvalid(id: string, operationResult: OperationResult<Customer>): void {
+    protected checkIfCustomerIdInvalid(id: string, operationResult: OperationResult<Customer>): void {
         if (!id) {
             operationResult.addMessage('invalid_customer_id', null, 'Invalid Customer Id');
         }
     }
 
-    private checkIfCustomerInvalid(customer: Customer, operationResult: OperationResult<Customer>): void {
+    protected checkIfCustomerInvalid(customer: Customer, operationResult: OperationResult<Customer>): void {
         if (!customer.valid()) {
             operationResult.addMessage('invalid_customer', null, 'Invalid Customer');
         }
     }
 
-    private checkIfQueryNull(query: Query, operationResult: OperationResult<Customer[]>): void {
+    protected checkIfQueryNull(query: Query, operationResult: OperationResult<Customer[]>): void {
         if (!query) {
             operationResult.addMessage('invalid_query', null, 'Invalid Query');
         }
     }
+
 }

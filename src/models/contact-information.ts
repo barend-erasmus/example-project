@@ -1,6 +1,7 @@
 import { Address } from './address';
 
 export class ContactInformation {
+
     constructor(
         public address: Address,
         public emailAddress: string,
@@ -17,15 +18,15 @@ export class ContactInformation {
         return false;
     }
 
-    private addressValid(): boolean {
+    protected addressValid(): boolean {
         return this.address ? this.address.valid() : false;
     }
 
-    private emailAddressValid(): boolean {
+    protected emailAddressValid(): boolean {
         return this.emailAddress ? true : false;
     }
 
-    private phoneNumberValid(): boolean {
+    protected phoneNumberValid(): boolean {
         return this.phoneNumber ? true : false;
     }
 

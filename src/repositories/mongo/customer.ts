@@ -14,7 +14,7 @@ export class MongoCustomerRepository extends BaseRepository implements ICustomer
 
     constructor(
         @unmanaged()
-        private searchQueryBuilder: IQueryBuilder,
+        protected searchQueryBuilder: IQueryBuilder,
         uri: string,
     ) {
         super(uri);
@@ -64,7 +64,7 @@ export class MongoCustomerRepository extends BaseRepository implements ICustomer
         return result.map((item) => this.dtoToCustomer(item));
     }
 
-    private dtoToCustomer(dto: any): Customer {
+    protected dtoToCustomer(dto: any): Customer {
         return new Customer(dto._id, new ContactInformation(
             new Address(
                 dto.contactInformation.address.city,
@@ -80,4 +80,5 @@ export class MongoCustomerRepository extends BaseRepository implements ICustomer
             dto.identificationNumber,
             dto.lastName);
     }
+
 }

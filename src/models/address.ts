@@ -1,4 +1,5 @@
 export class Address {
+
     constructor(
         public city: string,
         public country: string,
@@ -17,23 +18,24 @@ export class Address {
         return false;
     }
 
-    private cityValid(): boolean {
+    protected cityValid(): boolean {
         return this.city ? true : false;
     }
 
-    private countryValid(): boolean {
+    protected countryValid(): boolean {
         return this.country ? true : false;
     }
 
-    private line1Valid(): boolean {
+    protected line1Valid(): boolean {
         return this.line1 ? true : false;
     }
 
-    private line2Valid(): boolean {
+    protected line2Valid(): boolean {
         return this.line2 ? true : false;
     }
 
-    private postalCodeValid(): boolean {
+    protected postalCodeValid(): boolean {
         return this.postalCode ? true : false;
     }
+
 }

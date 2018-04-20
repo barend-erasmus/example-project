@@ -12,13 +12,13 @@ export class CustomerMapper {
         return customer;
     }
 
-    private mapContactInformationAddress(obj: any): Address {
+    protected mapContactInformationAddress(obj: any): Address {
         const address: Address = new Address(null, null, null, null, null);
 
         return this.mapObject<Address>(obj, address);
     }
 
-    private mapContactInformation(obj: any): ContactInformation {
+    protected mapContactInformation(obj: any): ContactInformation {
         if (!obj) {
             return null;
         }
@@ -32,7 +32,7 @@ export class CustomerMapper {
         return contactInformation;
     }
 
-    private mapObject<T>(obj: any, instance: T): T {
+    protected mapObject<T>(obj: any, instance: T): T {
         if (!obj) {
             return null;
         }

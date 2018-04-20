@@ -12,7 +12,7 @@ export class BaseRepository {
 
     protected static sequelize: Sequelize.Sequelize = null;
 
-    private static defineModels(): void {
+    protected static defineModels(): void {
 
         const Address = BaseRepository.sequelize.define('address', {
             city: {
@@ -103,4 +103,5 @@ export class BaseRepository {
             });
         });
     }
+
 }
