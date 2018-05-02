@@ -15,8 +15,8 @@
             <div class="input-group-prepend">
               <span class="input-group-text" id="basic-addon1">#</span>
             </div>
-            <input [(ngModel)]="findExistingCustomerIdentificationNumber" (keydown)="findExistingCustomerFound = null" type="text" class="form-control" placeholder="Identification Number"
-              aria-label="Identification Number" aria-describedby="basic-addon1">
+            <input [(ngModel)]="findExistingCustomerIdentificationNumber" (keydown)="findExistingCustomerFound = null" type="text" class="form-control"
+              placeholder="Identification Number" aria-label="Identification Number" aria-describedby="basic-addon1">
             <div class="input-group-append">
               <button (click)="onClickFindExistingCustomer()" class="btn btn-outline-secondary" type="button">Search</button>
             </div>
@@ -72,6 +72,11 @@
               <div class="input-group mb-3">
                 <input type="text" class="form-control" placeholder="Country" aria-label="Country" aria-describedby="basic-addon1">
               </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <button type="button" class="btn btn-primary float-md-right">Submit</button>
             </div>
           </div>
         </div>

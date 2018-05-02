@@ -83,6 +83,7 @@ export class BaseRepository {
             BaseRepository.sequelize = new Sequelize(null, null, null, {
                 dialect: 'sqlite',
                 logging: false,
+                operatorsAliases: false,
             });
 
             BaseRepository.defineModels();
